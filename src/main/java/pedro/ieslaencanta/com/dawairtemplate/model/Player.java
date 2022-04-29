@@ -8,20 +8,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-
 /**
  *
  * @author Pedro
  */
 public class Player {
-    private int lifes=3;
+
+    private int lifes = 3;
     private long score;
     private Font font;//, Font.ITALIC, 50);
-    public Player(){
-     
-    }
 
-   
+    public Player() {
+
+    }
 
     /**
      * @return the lifes
@@ -29,9 +28,11 @@ public class Player {
     public int getLifes() {
         return lifes;
     }
-    public void incScore(){
+
+    public void incScore() {
         this.score++;
     }
+
     /**
      * @return the score
      */
@@ -52,5 +53,5 @@ public class Player {
     public void setScore(long score) {
         this.score = score;
     }
-    
+
 }

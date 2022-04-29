@@ -7,33 +7,29 @@ package pedro.ieslaencanta.com.dawairtemplate.model.sprites;
 import pedro.ieslaencanta.com.dawairtemplate.model.Coordenada;
 import pedro.ieslaencanta.com.dawairtemplate.model.Size;
 
-
-
-
-
 /**
  *
  * @author Pedro
  */
 public abstract class Sprite implements IDrawable {
 
-    private Coordenada posicion;
-    private Size size;
-    private boolean visible;
-    private boolean live;
+    protected Coordenada posicion;
+    protected Size size;
+    protected boolean visible;
+    protected boolean live;
 
     public Sprite() {
         this.posicion = null;
-        this.size=null;
-        
+        this.size = null;
         this.visible = false;
         this.live = false;
     }
-    public Sprite(Size s,Coordenada p,boolean visible, boolean live){
-        this.posicion=p;
-        this.size=s;
-        this.visible=visible;
-        this.live=live;
+
+    public Sprite(Size s, Coordenada p, boolean visible, boolean live) {
+        this.posicion = p;
+        this.size = s;
+        this.visible = visible;
+        this.live = live;
     }
 
     /**
@@ -93,10 +89,10 @@ public abstract class Sprite implements IDrawable {
     }
 
     void init(Size s, Coordenada p, boolean visible, boolean live) {
-        this.posicion=p;
-        this.size=s;
-        this.visible=visible;
-        this.live=live;
+        this.posicion = p;
+        this.size = s;
+        this.visible = visible;
+        this.live = live;
     }
 
 }
