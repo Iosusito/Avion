@@ -98,7 +98,8 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
     }
 
     private void shoot() {
-        Bullet tempo = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board);
+        Direction d = Direction.RIGHT;
+        Bullet tempo = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, d);
         this.balas.add(tempo);
     }
 

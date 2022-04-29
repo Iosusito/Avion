@@ -19,11 +19,12 @@ public class Bullet extends SpriteMove {
 
     private Image imagen;
     private static String pathImagen = "bullets/bullet_rigth.png";
-    private Direction direction = Direction.RIGHT;
+    private Direction direction;
 
-    public Bullet(Size size, Coordenada posicion, Rectangle board) {
+    public Bullet(Size size, Coordenada posicion, Rectangle board, Direction d) {
         super(5, size, posicion, true, true, board);
         this.imagen = new Image(getClass().getResourceAsStream("/" + this.pathImagen));
+        this.direction = d;
     }
 
     @Override

@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import pedro.ieslaencanta.com.dawairtemplate.Background;
 import pedro.ieslaencanta.com.dawairtemplate.IWarnClock;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Bullet;
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Enemy;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Fighter;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IDrawable;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IKeyListener;
@@ -51,6 +52,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
     private Player p;
 
     private Fighter fighter;
+    private ArrayList<Enemy> enemigos;
 
     public Level(String image_path, String music_path, Size s, int speed, Coordenada start_position, GraphicsContext bg_ctx, float[] probabilidad_enemigos, int fin) {
         this.background = new Background(image_path, s, speed, start_position);
@@ -70,6 +72,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
                 new Coordenada(20, s.getHeight() / 2),
                 new Rectangle(new Coordenada(0, 0), new Coordenada(s.getWidth(), s.getHeight())));
 
+        this.enemigos = new ArrayList();
     }
 
     private void initSound(String music_path) {
@@ -94,6 +97,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
             gc.fillText(Level.msg[0], 100, 200);
         }
         this.fighter.draw(gc);
+        this.enemigos.forEach(e -> e.draw(gc));
     }
 
     @Override
@@ -121,6 +125,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         //pintar el fondo
         this.fighter.TicTac();
         this.background.TicTac();
+        this.enemigos.forEach(e -> e.TicTac());
     }
 
     private void moveBullets() {
