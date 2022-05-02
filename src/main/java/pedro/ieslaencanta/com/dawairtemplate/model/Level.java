@@ -53,6 +53,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
 
     private Fighter fighter;
     private ArrayList<Enemy> enemigos;
+    private ArrayList<Bullet> enemyBullets;
 
     public Level(String image_path, String music_path, Size s, int speed, Coordenada start_position, GraphicsContext bg_ctx, float[] probabilidad_enemigos, int fin) {
         this.background = new Background(image_path, s, speed, start_position);
@@ -73,6 +74,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
                 new Rectangle(new Coordenada(0, 0), new Coordenada(s.getWidth(), s.getHeight())));
 
         this.enemigos = new ArrayList();
+        this.enemyBullets = new ArrayList();
     }
 
     private void initSound(String music_path) {
@@ -98,6 +100,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         }
         this.fighter.draw(gc);
         this.enemigos.forEach(e -> e.draw(gc));
+        this.enemyBullets.forEach(b -> b.draw(gc));
     }
 
     @Override
@@ -105,14 +108,25 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         if (this.getEstado() == Estado.RUNNING) {
             //llamar a tictac de los hijos
             this.TicTacChildrens();
-
+            //generar enemigos aleatoriamente
+            this.generateEnemies();
+            //detectar colisiones entre los objetos
+            this.detectCollisions();
             //posicion en la que termina
             if (this.position < this.fin) {
                 this.position += this.speed;
             } else {
                 this.EndLevel();
             }
+        }
+    }
 
+    private void generateEnemies() {
+        int random = (int) (Math.random() * 30);
+        if (random == 0) {
+            int y = (int) (Math.random() * this.fighter.getBoard().getEnd().getY());
+            Enemy tempo = new Enemy(new Size(62, 28), new Coordenada(this.fighter.getBoard().getEnd().getX(), y - 28), this.fighter.getBoard());
+            this.enemigos.add(tempo);
         }
     }
 
@@ -125,12 +139,20 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         //pintar el fondo
         this.fighter.TicTac();
         this.background.TicTac();
-        this.enemigos.forEach(e -> e.TicTac());
-    }
 
-    private void moveBullets() {
-        //mover las balas
-        //comprobar las condiciones para borrar y borrar las balas
+        this.enemigos.forEach(e -> e.TicTac());
+        if ((int) (Math.random() * 50) == 0) {
+            this.enemigos.forEach(e -> this.enemyBullets.add(e.shoot()));
+            //DISPARAN TODOS A LA VEZ
+        }
+        this.enemigos.removeIf(e -> e.getPosicion().getX() - e.getInc() <= e.getBoard().getStart().getX());
+
+        this.enemyBullets.forEach(b -> b.move());
+        this.enemyBullets.removeIf(b -> b.getPosicion().getX() > b.getBoard().getEnd().getX());
+    }
+    
+    private void shootEnemies() {
+        
     }
 
     public boolean isEnd() {

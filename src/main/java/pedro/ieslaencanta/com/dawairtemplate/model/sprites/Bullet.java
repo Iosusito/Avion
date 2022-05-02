@@ -18,19 +18,20 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Size;
 public class Bullet extends SpriteMove {
 
     private Image imagen;
-    private static String pathImagen = "bullets/bullet_rigth.png";
+    private static String pathRightBullet = "bullets/bullet_rigth.png";
+    private static String pathLeftBullet = "bullets/bullet_left.png";
     private Direction direction;
 
     public Bullet(Size size, Coordenada posicion, Rectangle board, Direction d) {
         super(5, size, posicion, true, true, board);
-        this.imagen = new Image(getClass().getResourceAsStream("/" + this.pathImagen));
+        this.imagen = new Image(getClass().getResourceAsStream("/" + (d == Direction.RIGHT ? pathRightBullet : pathLeftBullet)));
         this.direction = d;
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-        int x = this.posicion.getX() + 70;
-        int y = this.posicion.getY() + 16;
+        int x = this.posicion.getX();
+        int y = this.posicion.getY();
         gc.drawImage(this.imagen, 0, 0, 17, 3, x, y, 17, 3);
     }
 

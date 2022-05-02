@@ -61,5 +61,9 @@ public abstract class SpriteMove extends Sprite implements IMove {
     public int getInc() {
         return this.inc;
     }
+    
+    public Rectangle getBoard() {
+        return this.board;
+    }
 
 }

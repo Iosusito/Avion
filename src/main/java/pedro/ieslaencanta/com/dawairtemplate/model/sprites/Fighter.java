@@ -99,7 +99,7 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
 
     private void shoot() {
         Direction d = Direction.RIGHT;
-        Bullet tempo = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, d);
+        Bullet tempo = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX() + 70, this.posicion.getY() + 16), board, d);
         this.balas.add(tempo);
     }
 
@@ -154,7 +154,7 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
         //mover las balas 
         this.balas.forEach(b -> b.move());
         //System.out.println("Antes vale "+this.balas.size());
-        this.balas.removeIf(b -> b.posicion.getX() > b.board.getEnd().getX());
+        this.balas.removeIf(b -> b.posicion.getX() + b.size.getWidth() + b.getInc() >= b.board.getEnd().getX());
         //System.out.println("Despues  vale "+this.balas.size());
     }
 }

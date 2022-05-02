@@ -18,7 +18,7 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Size;
 public class Enemy extends SpriteMove {
 
     private Image imagen;
-    private static String pathImagen = "bullets/bullet_rigth.png";
+    private static String pathImagen = "enemigos/e1.png";
 
     public Enemy(Size size, Coordenada posicion, Rectangle board) {
         super(3, size, posicion, true, true, board);
@@ -29,8 +29,16 @@ public class Enemy extends SpriteMove {
         this.move(Direction.LEFT);
     }
 
+    public Bullet shoot() {
+        Bullet b = null;
+        b = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, Direction.LEFT);
+        return b;
+    }
+
     @Override
     public void draw(GraphicsContext gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int x = this.posicion.getX();
+        int y = this.posicion.getY();
+        gc.drawImage(this.imagen, 0, 0, 31, 14, x, y, 62, 28);
     }
 }
