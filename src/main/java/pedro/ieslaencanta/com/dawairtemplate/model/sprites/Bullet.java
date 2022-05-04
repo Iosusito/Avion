@@ -36,6 +36,14 @@ public class Bullet extends SpriteMove {
     }
 
     public void move() {
-        this.move(this.direction);
+        this.move(this.getDirection());
     }
+
+    /**
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+    
 }

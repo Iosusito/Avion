@@ -5,6 +5,7 @@
  */
 package pedro.ieslaencanta.com.dawairtemplate.model.sprites;
 
+import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import pedro.ieslaencanta.com.dawairtemplate.model.Coordenada;
@@ -19,20 +20,24 @@ public class Enemy extends SpriteMove {
 
     private Image imagen;
     private static String pathImagen = "enemigos/e1.png";
+    private ArrayList<Bullet> bullets;
 
-    public Enemy(Size size, Coordenada posicion, Rectangle board) {
+    public Enemy(Size size, Coordenada posicion, Rectangle board, ArrayList<Bullet> bullets) {
         super(3, size, posicion, true, true, board);
         this.imagen = new Image(getClass().getResourceAsStream("/" + this.pathImagen));
+        this.bullets = bullets;
     }
 
     public void TicTac() {
         this.move(Direction.LEFT);
+        this.shoot();
     }
 
-    public Bullet shoot() {
-        Bullet b = null;
-        b = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, Direction.LEFT);
-        return b;
+    public void shoot() {
+        if ((int) (Math.random() * 30) == 0) {
+            Bullet b = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, Direction.LEFT);
+            this.bullets.add(b);
+        }
     }
 
     @Override

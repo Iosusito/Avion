@@ -20,6 +20,7 @@ import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Enemy;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Fighter;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IDrawable;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IKeyListener;
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IMove;
 
 /**
  *
@@ -125,7 +126,7 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         int random = (int) (Math.random() * 30);
         if (random == 0) {
             int y = (int) (Math.random() * this.fighter.getBoard().getEnd().getY());
-            Enemy tempo = new Enemy(new Size(62, 28), new Coordenada(this.fighter.getBoard().getEnd().getX(), y - 28), this.fighter.getBoard());
+            Enemy tempo = new Enemy(new Size(62, 28), new Coordenada(this.fighter.getBoard().getEnd().getX(), y - 28), this.fighter.getBoard(), this.enemyBullets);
             this.enemigos.add(tempo);
         }
     }
@@ -141,18 +142,15 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         this.background.TicTac();
 
         this.enemigos.forEach(e -> e.TicTac());
-        if ((int) (Math.random() * 50) == 0) {
-            this.enemigos.forEach(e -> this.enemyBullets.add(e.shoot()));
-            //DISPARAN TODOS A LA VEZ
-        }
         this.enemigos.removeIf(e -> e.getPosicion().getX() - e.getInc() <= e.getBoard().getStart().getX());
 
         this.enemyBullets.forEach(b -> b.move());
-        this.enemyBullets.removeIf(b -> b.getPosicion().getX() > b.getBoard().getEnd().getX());
+        this.enemyBullets.removeIf(b -> (b.getDirection() == IMove.Direction.RIGHT && b.getPosicion().getX() > b.getBoard().getEnd().getX())
+                || (b.getDirection() == IMove.Direction.LEFT && b.getPosicion().getX() - b.getInc() <= b.getBoard().getStart().getX()));
     }
-    
+
     private void shootEnemies() {
-        
+
     }
 
     public boolean isEnd() {
