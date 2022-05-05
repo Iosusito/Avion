@@ -100,7 +100,7 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
     private void shoot() {
         Direction d = Direction.RIGHT;
         Bullet tempo = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX() + 70, this.posicion.getY() + 16), board, d);
-        this.balas.add(tempo);
+        this.getBalas().add(tempo);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
                         this.getSize().getWidth(), this.getSize().getHeight());
             }
         }
-        this.balas.forEach(b -> b.draw(gc));
+        this.getBalas().forEach(b -> b.draw(gc));
     }
 
     //movimiento del avión
@@ -152,9 +152,16 @@ public class Fighter extends SpriteMove implements IKeyListener, IWarnClock {
     public void TicTac() {
         this.move();
         //mover las balas 
-        this.balas.forEach(b -> b.move());
+        this.getBalas().forEach(b -> b.move());
         //System.out.println("Antes vale "+this.balas.size());
-        this.balas.removeIf(b -> b.posicion.getX() + b.size.getWidth() + b.getInc() >= b.board.getEnd().getX());
+        this.getBalas().removeIf(b -> b.posicion.getX() + b.size.getWidth() + b.getInc() >= b.board.getEnd().getX());
         //System.out.println("Despues  vale "+this.balas.size());
+    }
+
+    /**
+     * @return the balas
+     */
+    public ArrayList<Bullet> getBalas() {
+        return balas;
     }
 }

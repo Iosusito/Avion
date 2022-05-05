@@ -21,6 +21,7 @@ import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Fighter;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IDrawable;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IKeyListener;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IMove;
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.SpriteMove;
 
 /**
  *
@@ -133,7 +134,9 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
 
     private void detectCollisions() {
         //se mira si las balas del avión le pegan a algún enemigo
-        //ademá se borran los que se pasen por el lateral
+        this.fighter.getBalas().forEach(b -> this.enemigos.forEach(e -> b.isCollision(e)));
+        //se mira si las balas enemigas pegan al avion
+
     }
 
     private void TicTacChildrens() {
@@ -142,11 +145,10 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
         this.background.TicTac();
 
         this.enemigos.forEach(e -> e.TicTac());
-        this.enemigos.removeIf(e -> e.getPosicion().getX() - e.getInc() <= e.getBoard().getStart().getX());
+        this.enemigos.removeIf(e -> e.getPosicion().getX() - e.getInc() <= e.getBoard().getStart().getX() || !e.isLive());
 
         this.enemyBullets.forEach(b -> b.move());
-        this.enemyBullets.removeIf(b -> (b.getDirection() == IMove.Direction.RIGHT && b.getPosicion().getX() > b.getBoard().getEnd().getX())
-                || (b.getDirection() == IMove.Direction.LEFT && b.getPosicion().getX() - b.getInc() <= b.getBoard().getStart().getX()));
+        this.enemyBullets.removeIf(b -> b.getPosicion().getX() - b.getInc() <= b.getBoard().getStart().getX());
     }
 
     private void shootEnemies() {

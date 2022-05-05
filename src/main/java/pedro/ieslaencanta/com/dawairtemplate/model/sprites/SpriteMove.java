@@ -17,10 +17,12 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Size;
  *
  * @author Pedro
  */
-public abstract class SpriteMove extends Sprite implements IMove {
+public abstract class SpriteMove extends Sprite implements IMove, ICollision {
 
     protected int inc;
     protected Rectangle board;
+    
+    protected boolean collided;
 
     public SpriteMove() {
         super();
@@ -36,6 +38,7 @@ public abstract class SpriteMove extends Sprite implements IMove {
         super(s, p, visible, live);
         this.inc = inc;
         this.board = board;
+        this.collided = false;
     }
 
     public void move(Direction d) {
@@ -57,7 +60,7 @@ public abstract class SpriteMove extends Sprite implements IMove {
 
         }
     }
-
+    
     public int getInc() {
         return this.inc;
     }
@@ -65,5 +68,41 @@ public abstract class SpriteMove extends Sprite implements IMove {
     public Rectangle getBoard() {
         return this.board;
     }
+      @Override
+    public int getX() {
+        return this.posicion.getX();
+    }
+
+    @Override
+    public int getY() {
+        return this.posicion.getY();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.size.getHeight();
+    }
+
+    @Override
+    public int getWidht() {
+        return this.size.getWidth();
+    }
+
+    @Override
+    public boolean hascollided() {
+        return this.collided;
+    }
+
+    @Override
+    public void setColision() {
+        this.collided = true;
+        this.live = false;
+    }
+
+    @Override
+    public void setFree() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
 }

@@ -45,5 +45,4 @@ public class Bullet extends SpriteMove {
     public Direction getDirection() {
         return direction;
     }
-    
 }
