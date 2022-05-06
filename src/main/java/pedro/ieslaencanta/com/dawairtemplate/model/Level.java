@@ -17,6 +17,7 @@ import pedro.ieslaencanta.com.dawairtemplate.Background;
 import pedro.ieslaencanta.com.dawairtemplate.IWarnClock;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Bullet;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Enemy;
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.EnemyFactory;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.Fighter;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IDrawable;
 import pedro.ieslaencanta.com.dawairtemplate.model.sprites.IKeyListener;
@@ -77,6 +78,8 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
 
         this.enemigos = new ArrayList();
         this.enemyBullets = new ArrayList();
+
+        this.p = new Player();
     }
 
     private void initSound(String music_path) {
@@ -126,17 +129,30 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
     private void generateEnemies() {
         int random = (int) (Math.random() * 30);
         if (random == 0) {
-            int y = (int) (Math.random() * this.fighter.getBoard().getEnd().getY());
-            Enemy tempo = new Enemy(new Size(62, 28), new Coordenada(this.fighter.getBoard().getEnd().getX(), y - 28), this.fighter.getBoard(), this.enemyBullets);
-            this.enemigos.add(tempo);
+            //Enemy tempo = this.eFactory.createEnemy(getRandomEnemyType());
+            //this.enemigos.add(tempo);
         }
     }
 
+    /*private EnemyFactory.Tipo getRandomEnemyType() {
+        EnemyFactory.Tipo t = EnemyFactory.Tipo.AVION;
+        int random = (int) (Math.random() * 1);
+        random++;
+        
+        switch (random) {
+            case 1:
+                t = EnemyFactory.Tipo.AVION;
+                break;
+        }
+        return t;
+    }*/
     private void detectCollisions() {
         //se mira si las balas del avión le pegan a algún enemigo
         this.fighter.getBalas().forEach(b -> this.enemigos.forEach(e -> b.isCollision(e)));
         //se mira si las balas enemigas pegan al avion
-
+        this.enemyBullets.forEach(b -> b.isCollision(this.fighter));
+        //se mira si algun enemigo y el avion chocan
+        this.enemigos.forEach(e -> e.isCollision(this.fighter));
     }
 
     private void TicTacChildrens() {
@@ -149,10 +165,6 @@ public class Level implements IDrawable, IWarnClock, IKeyListener {
 
         this.enemyBullets.forEach(b -> b.move());
         this.enemyBullets.removeIf(b -> b.getPosicion().getX() - b.getInc() <= b.getBoard().getStart().getX());
-    }
-
-    private void shootEnemies() {
-
     }
 
     public boolean isEnd() {

@@ -103,6 +103,4 @@ public abstract class SpriteMove extends Sprite implements IMove, ICollision {
     public void setFree() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-
 }

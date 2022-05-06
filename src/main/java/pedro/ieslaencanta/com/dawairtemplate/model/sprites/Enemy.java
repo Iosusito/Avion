@@ -16,16 +16,14 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Size;
  *
  * @author DAM
  */
-public class Enemy extends SpriteMove {
+public abstract class Enemy extends SpriteMove {
 
-    private Image imagen;
-    private static String pathImagen = "enemigos/e1.png";
-    private ArrayList<Bullet> bullets;
+    protected Image imagen;
+    protected ArrayList<Bullet> bullets;
 
-    public Enemy(Size size, Coordenada posicion, Rectangle board, ArrayList<Bullet> bullets) {
+    public Enemy(Size size, Coordenada posicion, Rectangle board) {
         super(3, size, posicion, true, true, board);
-        this.imagen = new Image(getClass().getResourceAsStream("/" + this.pathImagen));
-        this.bullets = bullets;
+       
     }
 
     public void TicTac() {
@@ -34,7 +32,7 @@ public class Enemy extends SpriteMove {
     }
 
     public void shoot() {
-        if ((int) (Math.random() * 30) == 0) {
+        if ((int) (Math.random() * 50) == 0) {
             Bullet b = new Bullet(new Size(12, 3), new Coordenada(this.posicion.getX(), this.posicion.getY()), board, Direction.LEFT);
             this.bullets.add(b);
         }
@@ -45,5 +43,9 @@ public class Enemy extends SpriteMove {
         int x = this.posicion.getX();
         int y = this.posicion.getY();
         gc.drawImage(this.imagen, 0, 0, 31, 14, x, y, 62, 28);
+    }
+    
+    public void setBullets(ArrayList<Bullet> balas) {
+        this.bullets = balas;
     }
 }

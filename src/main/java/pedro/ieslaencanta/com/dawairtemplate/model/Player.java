@@ -19,7 +19,7 @@ public class Player {
     private Font font;//, Font.ITALIC, 50);
 
     public Player() {
-
+        this.score = 0;
     }
 
     /**

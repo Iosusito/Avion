@@ -14,7 +14,8 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Coordenada;
 import pedro.ieslaencanta.com.dawairtemplate.model.Level;
 import pedro.ieslaencanta.com.dawairtemplate.model.Player;
 import pedro.ieslaencanta.com.dawairtemplate.model.Size;
-
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.EnemyFactory;
+import pedro.ieslaencanta.com.dawairtemplate.model.sprites.EnemyPlane;
 
 /**
  *
@@ -22,7 +23,6 @@ import pedro.ieslaencanta.com.dawairtemplate.model.Size;
  */
 public class GameStage extends AbstractScene {
 
-   
     private Level actual;
     private Size s;
     private static Font font;//, Font.ITALIC, 50);
@@ -42,18 +42,17 @@ public class GameStage extends AbstractScene {
     //private boolean[] keys_presed;
     public GameStage(GraphicsContext context, GraphicsContext bg_context, Size s) {
         super(context, bg_context, s, null);
-        this.s=s;
+        this.s = s;
         this.state = SceneState.PRE_STARTED;
-        this.actual = new Level("/level1/bg2.png", "/level1/music.mp3", s, 2, new Coordenada(0, 0), bg_context, GameStage.probabilidades[0],2500);
+        this.actual = new Level("/level1/bg2.png", "/level1/music.mp3", s, 2, new Coordenada(0, 0), bg_context, GameStage.probabilidades[0], 2500);
         this.initFactory();
         this.player = new Player();
-       
 
     }
 
     //se inicializan la factoria de enemigos
     private void initFactory() {
-      
+        EnemyFactory.addEnemy("Plane", EnemyPlane::new);
     }
 
     @Override
@@ -62,10 +61,10 @@ public class GameStage extends AbstractScene {
             this.actual.TicTac();
             //para pasar de nivel
             if (this.actual.getEstado() == Level.Estado.END) {
-                
-                    //no quedan niveles
-                    this.stop();
-                
+
+                //no quedan niveles
+                this.stop();
+
             }
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
